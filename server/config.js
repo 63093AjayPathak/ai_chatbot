@@ -1,5 +1,5 @@
-const org_name = "org-KVGYhgy5RXa7ssd9VaCHiUoN";
-const api_key = "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";
+const org_name = "Paste the Organization ID here";
+const api_key = "Paste the API key here";
 
 module.exports = {
   org_name: org_name,
