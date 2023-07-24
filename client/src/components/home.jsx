@@ -32,39 +32,54 @@ const Home = () => {
     (body) => {
       setChat((prevChat) => [...prevChat, body]);
     },
+    // eslint-disable-next-line
     [chat]
   );
 
   // for clearing current chat
-  const clearChat = useCallback(() => {
-    setChat([{ user: "ai", message: "How can I help you?" }]);
-  }, [chat]);
+  const clearChat = useCallback(
+    () => {
+      setChat([{ user: "ai", message: "How can I help you?" }]);
+    },
+    // eslint-disable-next-line
+    [chat]
+  );
 
   // for setting chat of translations
   const setTranslateChat = useCallback(
     (body) => {
       setTranslate((prevTranslate) => [...prevTranslate, body]);
     },
+    // eslint-disable-next-line
     [translate]
   );
 
   // for clearing state of translations
-  const clearTranslate = useCallback(() => {
-    setTranslate([{ user: "ai", message: "How can I help you?" }]);
-  }, [translate]);
+  const clearTranslate = useCallback(
+    () => {
+      setTranslate([{ user: "ai", message: "How can I help you?" }]);
+    },
+    // eslint-disable-next-line
+    [translate]
+  );
 
   // for setting state of code translations
   const setCurrentTranslateCode = useCallback(
     (body) => {
       setTranslateCode((prevTranslateCode) => [...prevTranslateCode, body]);
     },
+    // eslint-disable-next-line
     [translateCode]
   );
 
   // for clearing state of code translations
-  const clearTranslateCode = useCallback(() => {
-    setTranslateCode([{ user: "ai", message: "How can I help you?" }]);
-  }, [translateCode]);
+  const clearTranslateCode = useCallback(
+    () => {
+      setTranslateCode([{ user: "ai", message: "How can I help you?" }]);
+    },
+    // eslint-disable-next-line
+    [translateCode]
+  );
 
   // setting state (chosenButton to various values according to the option chosen in UI)
   const setToChat = () => {
