@@ -73,6 +73,48 @@
     box-shadow: 0 0 8px 0 rgba(0 ,0, 0, 0.25);
 }
 
+.message{
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+}
+
+.avatar.false{
+    /* background: white; */
+    border-radius: 20px;
+    height: 40px;
+    width: 40px;
+}
+
+
+.avatar.chatgpt{
+    background: white;
+    border-radius: 20px;
+    height: 40px;
+    width: 40px;
+    background-color: #19c37d;
+}
+
+.chat-message.false{
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.chat-message.chatgpt{
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: #444654;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.chat-message-centre{
+    display: flex;
+    padding: 12px; 
+}
+
 .main-container{
     text-align: center;
   display: flex;

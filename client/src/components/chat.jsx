@@ -1,12 +1,13 @@
 import "./stylesheets/chat-complete.css";
 import React from "react";
+import MessageBody from "./building-blocks/message-body";
 
 const Chat = () => {
   return (
     <div>
       <div className="chat-log" style={{ overflowY: "auto" }}>
         <div className="container">
-          <p>Here each message will appear</p>
+          <MessageBody user="ai" message="Hello , how can I help you" />
         </div>
       </div>
       <div className="text-box">
