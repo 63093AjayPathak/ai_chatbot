@@ -1,20 +1,76 @@
 import "./stylesheets/chat-complete.css";
-import React from "react";
 import MessageBody from "./building-blocks/message-body";
+import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import URL from "./building-blocks/config";
 
-const Chat = () => {
+const Chat = ({ state, methodToChange }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const chat = state;
+  const setCurrentChat = methodToChange;
+
+  const callOnEnter = (event) => {
+    if (event.key === "Enter") {
+      senduserMessage(inputValue);
+      setInputValue("");
+    }
+  };
+
+  const callOnChange = (e) => {
+    setInputValue(e.target.value);
+  };
+  const senduserMessage = (message) => {
+    if (/^\s*$/.test(message)) {
+      toast.warn(`Please type something valid`);
+    } else {
+      const body = {
+        user: "user",
+        message: `${message}`,
+      };
+      setCurrentChat(body);
+      axios
+        .post(URL + "/chat", {
+          message: message,
+        })
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          const b = { user: "ai", message: `${response.data}` };
+          setCurrentChat(b);
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error(
+            `Something seems to be wrong from our side, please try again later`
+          );
+        });
+    }
+  };
+
   return (
     <div>
       <div className="chat-log" style={{ overflowY: "auto" }}>
         <div className="container">
-          <MessageBody user="ai" message="Hello , how can I help you" />
+          {chat?.map((message) => {
+            return (
+              <MessageBody
+                key={message.index}
+                user={message.user}
+                message={message.message}
+              />
+            );
+          })}
         </div>
       </div>
       <div className="text-box">
         <input
           className="text-input"
           placeholder="Got something to say, type here. Press Enter to send"
+          value={inputValue}
           rows={1}
+          onKeyDown={callOnEnter}
+          onChange={callOnChange}
         ></input>
       </div>
     </div>
