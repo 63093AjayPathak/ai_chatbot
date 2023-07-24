@@ -1,7 +1,21 @@
 import "./stylesheets/chat-complete.css";
 import React from "react";
+import { useState } from "react";
 
 const Home = () => {
+  // states for our whole client side
+  const [chat, setChat] = useState([
+    { user: "ai", message: "How can I help you?" },
+  ]);
+
+  const [translate, setTranslate] = useState([
+    { user: "ai", message: "How can I help you?" },
+  ]);
+
+  const [translateCode, setTranslateCode] = useState([
+    { user: "ai", message: "How can I help you?" },
+  ]);
+
   return (
     <div
       style={{
@@ -33,4 +47,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);
