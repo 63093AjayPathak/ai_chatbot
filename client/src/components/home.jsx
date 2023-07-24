@@ -1,10 +1,9 @@
 import "./stylesheets/chat-complete.css";
-import React from "react";
-import { useState, useCallback } from "react";
-import { toast } from "react-toastify";
+import React, { useState, useCallback } from "react";
 import Chat from "./chat";
 import Translate from "./translate";
 import CodeTranslate from "./code-translate";
+import { toast } from "react-toastify";
 
 const Home = () => {
   // states for our whole client side
@@ -67,6 +66,7 @@ const Home = () => {
     setTranslateCode([{ user: "ai", message: "How can I help you?" }]);
   }, [translateCode]);
 
+  // setting state (chosenButton to various values according to the option chosen in UI)
   const setToChat = () => {
     changeButton("chat");
   };
@@ -137,9 +137,43 @@ const Home = () => {
       </div>
 
       <div className="main-container">
-        <aside className="conversations"></aside>
+        <aside className="conversations">
+          <div
+            className={
+              chosenButton === `chat`
+                ? `toggle-button-selected`
+                : `toggle-button`
+            }
+            onClick={setToChat}
+          >
+            Chat
+          </div>
+          <div
+            className={
+              chosenButton === `translate`
+                ? `toggle-button-selected`
+                : `toggle-button`
+            }
+            onClick={setToTranslate}
+          >
+            Translator
+          </div>
+          <div
+            className={
+              chosenButton === `code`
+                ? `toggle-button-selected`
+                : `toggle-button`
+            }
+            onClick={setToCodeTranslate}
+          >
+            Code Translator
+          </div>
+          <div className="toggle-button" onClick={clearConvo}>
+            Clear Chat
+          </div>
+        </aside>
         <section className="chat-box" style={{ overflowY: "auto" }}>
-          <Chat />
+          {componentToRender(chat, setCurrentChat, clearChat)}
         </section>
       </div>
     </div>
