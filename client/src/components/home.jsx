@@ -1,6 +1,10 @@
 import "./stylesheets/chat-complete.css";
 import React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { toast } from "react-toastify";
+import Chat from "./chat";
+import Translate from "./translate";
+import CodeTranslate from "./code-translate";
 
 const Home = () => {
   // states for our whole client side
@@ -15,6 +19,99 @@ const Home = () => {
   const [translateCode, setTranslateCode] = useState([
     { user: "ai", message: "How can I help you?" },
   ]);
+
+  // to be used in rendering the component chosen and clearing the chat of chosen component
+  const [chosenButton, setChosenButton] = useState("chat");
+
+  // for setting the chosen option among chat/translate/code_translate
+  const changeButton = (value) => {
+    setChosenButton(value);
+  };
+
+  // for setting the current chat
+  const setCurrentChat = useCallback(
+    (body) => {
+      setChat((prevChat) => [...prevChat, body]);
+    },
+    [chat]
+  );
+
+  // for clearing current chat
+  const clearChat = useCallback(() => {
+    setChat([{ user: "ai", message: "How can I help you?" }]);
+  }, [chat]);
+
+  // for setting chat of translations
+  const setTranslateChat = useCallback(
+    (body) => {
+      setTranslate((prevTranslate) => [...prevTranslate, body]);
+    },
+    [translate]
+  );
+
+  // for clearing state of translations
+  const clearTranslate = useCallback(() => {
+    setTranslate([{ user: "ai", message: "How can I help you?" }]);
+  }, [translate]);
+
+  // for setting state of code translations
+  const setCurrentTranslateCode = useCallback(
+    (body) => {
+      setTranslateCode((prevTranslateCode) => [...prevTranslateCode, body]);
+    },
+    [translateCode]
+  );
+
+  // for clearing state of code translations
+  const clearTranslateCode = useCallback(() => {
+    setTranslateCode([{ user: "ai", message: "How can I help you?" }]);
+  }, [translateCode]);
+
+  const setToChat = () => {
+    changeButton("chat");
+  };
+
+  const setToTranslate = () => {
+    changeButton("translate");
+  };
+
+  const setToCodeTranslate = () => {
+    changeButton("code");
+  };
+
+  // clearing conversation on the basis of chosenButton
+  const clearConvo = () => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to clear the conversation?"
+    );
+
+    if (isConfirmed) {
+      if (chosenButton === "chat") {
+        clearChat();
+      } else if (chosenButton === "translate") {
+        clearTranslate();
+      } else {
+        clearTranslateCode();
+      }
+      toast.info("Conversation cleared");
+    }
+  };
+
+  // conditional rendering of component according to chosenButton
+  const componentToRender = () => {
+    if (chosenButton === `chat`) {
+      return <Chat state={chat} methodToChange={setCurrentChat} />;
+    } else if (chosenButton === `translate`) {
+      return <Translate state={translate} methodToChange={setTranslateChat} />;
+    } else {
+      return (
+        <CodeTranslate
+          state={translateCode}
+          methodToChange={setCurrentTranslateCode}
+        />
+      );
+    }
+  };
 
   return (
     <div
@@ -41,7 +138,9 @@ const Home = () => {
 
       <div className="main-container">
         <aside className="conversations"></aside>
-        <section className="chat-box" style={{ overflowY: "auto" }}></section>
+        <section className="chat-box" style={{ overflowY: "auto" }}>
+          <Chat />
+        </section>
       </div>
     </div>
   );
